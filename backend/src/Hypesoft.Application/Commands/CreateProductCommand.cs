@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Hypesoft.Application.Commands;
 
-public class CreateProductCommand : IRequest<Guid>
+public class CreateProductCommand : IRequest<Unit>
 {
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;

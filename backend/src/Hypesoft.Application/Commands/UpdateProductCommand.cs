@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Hypesoft.Application.Commands;
 
-public class UpdateProductCommand : IRequest
+public class UpdateProductCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }           // ID do produto a ser atualizado
     public string Name { get; set; } = null!;
