@@ -1,0 +1,61 @@
+# ==========================
+# Node / Frontend
+# ==========================
+frontend/node_modules/
+frontend/.next/
+frontend/.vite/
+frontend/dist/
+frontend/.turbo/
+frontend/.eslintcache
+frontend/.stylelintcache
+
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# Environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# ==========================
+# .NET / Backend
+# ==========================
+backend/bin/
+backend/obj/
+backend/**/*.user
+backend/**/*.suo
+backend/**/*.cache
+backend/**/*.log
+backend/**/*.vspscc
+backend/**/*.vscode
+
+# Rider / VS Code / JetBrains
+backend/.idea/
+backend/.vscode/
+
+# Entity Framework migrations snapshot
+backend/**/Migrations/
+
+# Secrets
+backend/appsettings.Development.json
+backend/appsettings.*.json
+backend/*.secrets.json
+
+# ==========================
+# Global
+# ==========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.log
+
+# Docker
+docker-compose.override.yml
+*.pid
