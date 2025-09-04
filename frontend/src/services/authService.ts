@@ -1,4 +1,4 @@
-import keycloak from "../lib/keycloackClient"
+import keycloak from "../lib/keycloakClient"
 import { User } from "../types/User"
 
 export const authService = {
