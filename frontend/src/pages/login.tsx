@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import keycloak from "@/src/lib/keycloackClient"
+import keycloak from "@/src/lib/keycloakClient"
 import { Button } from "@/src/components/ui/button"
 
 export default function LoginPage() {
@@ -15,7 +15,7 @@ export default function LoginPage() {
       .init({ onLoad: "login-required" })
       .then((authenticated) => {
         if (authenticated) {
-          router.push("/dashboard")
+          router.replace("/dashboard") 
         } else {
           setError("Authentication failed")
         }
@@ -27,7 +27,13 @@ export default function LoginPage() {
       })
   }, [router])
 
-  if (loading) return <p>Loading...</p>
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-background">
+        <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
@@ -44,3 +50,5 @@ export default function LoginPage() {
     </div>
   )
 }
+
+;(LoginPage as any).publicPage = true
