@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   mongo:
     image: mongo:6
@@ -21,9 +20,13 @@ services:
       - "8080:8080"
 
   api:
-    build: ./src/Hypesoft.API
+    build:
+      context: ./backend/src
+      dockerfile: Hypesoft.API/Dockerfile
     ports:
-      - "5000:80"
+      - "5000:5000"
+    environment:
+      - ConnectionStrings__MongoDb=mongodb://mongo:27017/hypesoftdb
     depends_on:
       - mongo
       - keycloak
