@@ -1,6 +1,7 @@
 "use client"
 
 import { useAuth } from "@/src/hooks/useAuth"
+import { useRouter } from "next/navigation"
 import {
   BarChart3,
   Crown,
@@ -16,20 +17,34 @@ import {
 import { Button } from "../ui/button"
 import { Badge } from "../ui/badge"
 
-const menuItems = [
-  { icon: Home, label: "Dashboard", active: true },
-  { icon: BarChart3, label: "Statistics" },
-  { icon: Store, label: "My Shop" },
-  { icon: Package, label: "Products" },
-  { icon: Users, label: "Customers" },
-  { icon: FileText, label: "Invoices" },
-  { icon: MessageSquare, label: "Messages", badge: "4" },
-  { icon: Settings, label: "Settings" },
-  { icon: HelpCircle, label: "Help" },
-]
+type MenuItem = {
+  icon: React.ElementType
+  label: string
+  path: string
+  badge?: string
+}
+
+const menuItems: Record<string, MenuItem[]> = {
+  General: [
+    { icon: Home, label: "Dashboard", path: "/dashboard" },
+    { icon: BarChart3, label: "Statistics", path: "/notfound" },
+  ],
+  Shop: [
+    { icon: Store, label: "My Shop", path: "/notfound" },
+    { icon: Package, label: "Products", path: "/products" },
+    { icon: Users, label: "Customers", path: "/categories" },
+    { icon: FileText, label: "Invoices", path: "/notfound" },
+    { icon: MessageSquare, label: "Messages", badge: "4", path: "/notfound" },
+  ],
+  Support: [
+    { icon: Settings, label: "Settings", path: "/notfound" },
+    { icon: HelpCircle, label: "Help", path: "/notfound" },
+  ],
+}
 
 export const Sidebar = () => {
   const { user } = useAuth()
+  const router = useRouter()
 
   return (
     <aside className="w-64 bg-white flex flex-col">
@@ -47,83 +62,38 @@ export const Sidebar = () => {
 
       {/* Menu */}
       <div className="flex-1 p-4">
-        <div className="mb-6">
-          <p className="text-xs font-medium text-gray-500 mb-3 uppercase tracking-wider">
-            General
-          </p>
-          <nav className="space-y-1">
-            {menuItems.slice(0, 2).map((item) => (
-              <Button
-                key={item.label}
-                variant={item.active ? "default" : "ghost"}
-                className={`w-full justify-start gap-3 ${
-                  item.active
-                    ? "bg-purple-600 text-white shadow-lg"
-                    : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                <item.icon className="w-4 h-4" />
-                {item.label}
-                {item.badge && (
-                  <Badge
-                    variant="secondary"
-                    className="ml-auto text-xs bg-purple-100 text-purple-600"
-                  >
-                    {item.badge}
-                  </Badge>
-                )}
-              </Button>
-            ))}
-          </nav>
-        </div>
-
-        <div className="mb-6">
-          <p className="text-xs font-medium text-gray-500 mb-3 uppercase tracking-wider">
-            Shop
-          </p>
-          <nav className="space-y-1">
-            {menuItems.slice(2, 7).map((item) => (
-              <Button
-                key={item.label}
-                variant="ghost"
-                className="w-full justify-start gap-3 text-gray-500 hover:text-gray-900 hover:bg-gray-100"
-              >
-                <item.icon className="w-4 h-4" />
-                {item.label}
-                {item.badge && (
-                  <Badge
-                    variant="secondary"
-                    className="ml-auto text-xs bg-purple-100 text-purple-600"
-                  >
-                    {item.badge}
-                  </Badge>
-                )}
-              </Button>
-            ))}
-          </nav>
-        </div>
-
-        <div>
-          <p className="text-xs font-medium text-gray-500 mb-3 uppercase tracking-wider">
-            Support
-          </p>
-          <nav className="space-y-1">
-            {menuItems.slice(7, 9).map((item) => (
-              <Button
-                key={item.label}
-                variant="ghost"
-                className="w-full justify-start gap-3 text-gray-500 hover:text-gray-900 hover:bg-gray-100"
-              >
-                <item.icon className="w-4 h-4" />
-                {item.label}
-              </Button>
-            ))}
-          </nav>
-        </div>
+        {Object.entries(menuItems).map(([section, items]) => (
+          <div key={section} className="mb-6">
+            <p className="text-xs font-medium text-gray-500 mb-3 uppercase tracking-wider">
+              {section}
+            </p>
+            <nav className="space-y-1">
+              {items.map((item) => (
+                <Button
+                  key={item.label}
+                  variant="ghost"
+                  onClick={() => router.push(item.path)}
+                  className="w-full justify-start gap-3 text-gray-500 hover:text-gray-900 hover:bg-gray-100"
+                >
+                  <item.icon className="w-4 h-4" />
+                  {item.label}
+                  {item.badge && (
+                    <Badge
+                      variant="secondary"
+                      className="ml-auto text-xs bg-purple-100 text-purple-600"
+                    >
+                      {item.badge}
+                    </Badge>
+                  )}
+                </Button>
+              ))}
+            </nav>
+          </div>
+        ))}
       </div>
 
       {/* Upgrade Section */}
-      <div className="p-4 ">
+      <div className="p-4">
         <div className="bg-gradient-to-br from-purple-100/10 to-purple-500/10 rounded-lg p-4 mb-4">
           <div className="flex items-center gap-2 mb-2">
             <Crown className="w-4 h-4 text-purple-600" />
